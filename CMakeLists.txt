@@ -174,39 +174,39 @@ endif()
 # Setup for the steamnetworkingsockets(64).dll / libsteamnetworkingsockets.so?
 ##############################################################################
 
-# Setup the target
-add_library(${LIB_STEAMNETWORKINGSOCKETS}
-	SHARED
-	steamnetworkingsockets.cpp
-)
+# # Setup the target
+# add_library(${LIB_STEAMNETWORKINGSOCKETS}
+# 	SHARED
+# 	steamnetworkingsockets.cpp
+# )
 
-# Add target compile definitions
-target_compile_definitions(${LIB_STEAMNETWORKINGSOCKETS}
-	PRIVATE
-	$<$<CONFIG:>:EMU_RELEASE_BUILD>
-  $<$<CONFIG:Release>:EMU_RELEASE_BUILD>
-	$<$<CONFIG:RelWithDebInfo>:EMU_RELEASE_BUILD>
-	$<$<CONFIG:MinSizeRel>:EMU_RELEASE_BUILD>
-	$<$<BOOL:${EMU_EXPERIMENTAL_BUILD}>:EMU_EXPERIMENTAL_BUILD>
-)
+# # Add target compile definitions
+# target_compile_definitions(${LIB_STEAMNETWORKINGSOCKETS}
+# 	PRIVATE
+# 	$<$<CONFIG:>:EMU_RELEASE_BUILD>
+#   $<$<CONFIG:Release>:EMU_RELEASE_BUILD>
+# 	$<$<CONFIG:RelWithDebInfo>:EMU_RELEASE_BUILD>
+# 	$<$<CONFIG:MinSizeRel>:EMU_RELEASE_BUILD>
+# 	$<$<BOOL:${EMU_EXPERIMENTAL_BUILD}>:EMU_EXPERIMENTAL_BUILD>
+# )
 
-# Setup install rules for the target
-if(WIN32)
-  install(TARGETS
-    ${LIB_STEAMNETWORKINGSOCKETS}
-    RUNTIME DESTINATION ./
-  )
-else()
-	install(TARGETS
-    ${LIB_STEAMNETWORKINGSOCKETS}
-    LIBRARY DESTINATION ./
-  )
-endif()
+# # Setup install rules for the target
+# if(WIN32)
+#   install(TARGETS
+#     ${LIB_STEAMNETWORKINGSOCKETS}
+#     RUNTIME DESTINATION ./
+#   )
+# else()
+# 	install(TARGETS
+#     ${LIB_STEAMNETWORKINGSOCKETS}
+#     LIBRARY DESTINATION ./
+#   )
+# endif()
 
-if(NOT WIN32)
-  message(STATUS "Target library 'steamnetworkingsockets' is only supported for windows at this time... Disabling Build ALL inclusion for this target")
-	set_target_properties(${LIB_STEAMNETWORKINGSOCKETS} PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
-endif()
+# if(NOT WIN32)
+#   message(STATUS "Target library 'steamnetworkingsockets' is only supported for windows at this time... Disabling Build ALL inclusion for this target")
+# 	set_target_properties(${LIB_STEAMNETWORKINGSOCKETS} PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)
+# endif()
 
 ###########################################################################
 # Setup for the lobby_connect(64).exe / lobby_connect
