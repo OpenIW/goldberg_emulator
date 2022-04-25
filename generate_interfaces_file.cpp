@@ -1,13 +1,11 @@
 #include <regex>
 #include <string>
 #include <fstream>
-#include <streambuf>
 #include <iostream>
 
-
-unsigned int findinterface(std::ofstream &out_file, std::string &file_contents, std::string interface)
+unsigned int findinterface(std::ofstream &out_file, std::string &file_contents, std::string steam_interface)
 {
-    std::regex interface_regex(interface);
+    std::regex interface_regex(steam_interface);
     auto begin = std::sregex_iterator(file_contents.begin(), file_contents.end(), interface_regex);
     auto end = std::sregex_iterator();
 
@@ -34,7 +32,7 @@ int main (int argc, char *argv[])
                     std::istreambuf_iterator<char>());
     steam_api_file.close();
 
-    if (steam_api_contents.size() == 0) {
+    if (steam_api_contents.empty()) {
         std::cout << "Error opening file" << std::endl;
         return 1;
     }
@@ -65,7 +63,7 @@ int main (int argc, char *argv[])
                                                 "SteamMasterServerUpdater",
                                                 "STEAMVIDEO_INTERFACE_V"};
 
-    for (auto name : interface_names) {
+    for (const auto &name : interface_names) {
         findinterface(out_file, steam_api_contents, name + "\\d{3}");
     }
 
