@@ -1,36 +1,13 @@
-# Based on: https://github.com/ttroy50/cmake-examples/blob/master/03-code-generation/protobuf/CMakeLists.txt
-cmake_minimum_required(VERSION 3.6)
-
-# Set the project name
-project(goldberg_emulator)
-
 if(MSVC)
-  # Set static environment (results in static compile flags) if Visual Studio is used (dynamic by default)
-	# Officially recommended solution: https://gitlab.kitware.com/cmake/community/wikis/FAQ#how-can-i-build-my-msvc-application-with-a-static-runtime
-	# Should be replaced by a better solution in the future: https://gitlab.kitware.com/cmake/cmake/merge_requests/3211
-	foreach(flag_var
-		CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
-		CMAKE_CXX_FLAGS_MINSIZEREL CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-		if(${flag_var} MATCHES "/MD")
-		  string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
-		endif(${flag_var} MATCHES "/MD")
-	endforeach(flag_var)
-
 	# Disable MSVC++ warning C4996: 'may be unsafe/disable deprecation'
 	add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 # Add option to enable experimental build
-option(EMU_EXPERIMENTAL_BUILD "Enable experimental build" OFF)
-
-# Set CXX standard
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+option(EMU_EXPERIMENTAL_BUILD "Enable goldberg emulator experimental build" OFF)
 
 # Find the protobuf compiler and libraries
-include(FindProtobuf)
-find_package(Protobuf 3.1.0 REQUIRED)
+find_package(Protobuf CONFIG REQUIRED)
 
 # Generate the .h and .cxx files for dll/net.proto
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS dll/net.proto)
@@ -304,19 +281,19 @@ install(TARGETS
 # Installation setup for non target files and directories
 ###########################################################################
 
-install(FILES 
+install(FILES
   Readme_lobby_connect.txt
   DESTINATION lobby_connect/
 )
 
-install(FILES 
+install(FILES
   scripts/find_interfaces.sh
   scripts/find_interfaces.ps1
   Readme_generate_interfaces.txt
   DESTINATION tools/
 )
 
-install(FILES 
+install(FILES
   Readme_release.txt
   files_example/steam_appid.EDIT_AND_RENAME.txt
   files_example/steam_interfaces.EXAMPLE.txt
@@ -325,7 +302,7 @@ install(FILES
   DESTINATION ./
 )
 
-install(DIRECTORY 
+install(DIRECTORY
   files_example/steam_settings.EXAMPLE
   DESTINATION ./
 )
