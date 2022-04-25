@@ -242,18 +242,18 @@ bool GetResultItems( SteamInventoryResult_t resultHandle,
 
 // In combination with GetResultItems, you can use GetResultItemProperty to retrieve
 // dynamic string properties for a given item returned in the result set.
-// 
+//
 // Property names are always composed of ASCII letters, numbers, and/or underscores.
 //
 // Pass a NULL pointer for pchPropertyName to get a comma - separated list of available
 // property names.
 //
-// If pchValueBuffer is NULL, *punValueBufferSize will contain the 
+// If pchValueBuffer is NULL, *punValueBufferSize will contain the
 // suggested buffer size. Otherwise it will be the number of bytes actually copied
-// to pchValueBuffer. If the results do not fit in the given buffer, partial 
+// to pchValueBuffer. If the results do not fit in the given buffer, partial
 // results may be copied.
-bool GetResultItemProperty( SteamInventoryResult_t resultHandle, 
-                                    uint32 unItemIndex, 
+bool GetResultItemProperty( SteamInventoryResult_t resultHandle,
+                                    uint32 unItemIndex,
                                     const char *pchPropertyName,
                                     STEAM_OUT_STRING_COUNT( punValueBufferSizeOut ) char *pchValueBuffer, uint32 *punValueBufferSizeOut )
 {
@@ -433,7 +433,7 @@ bool DeserializeResult( SteamInventoryResult_t *pOutResultHandle, STEAM_BUFFER_C
 
 // GenerateItems() creates one or more items and then generates a SteamInventoryCallback_t
 // notification with a matching nCallbackContext parameter. This API is only intended
-// for prototyping - it is only usable by Steam accounts that belong to the publisher group 
+// for prototyping - it is only usable by Steam accounts that belong to the publisher group
 // for your game.
 // If punArrayQuantity is not NULL, it should be the same length as pArrayItems and should
 // describe the quantity of each item to generate.
@@ -501,13 +501,13 @@ bool ConsumeItem( SteamInventoryResult_t *pResultHandle, SteamItemInstanceID_t i
 }
 
 
-// ExchangeItems() is an atomic combination of item generation and consumption. 
-// It can be used to implement crafting recipes or transmutations, or items which unpack 
-// themselves into other items (e.g., a chest). 
-// Exchange recipes are defined in the ItemDef, and explicitly list the required item 
-// types and resulting generated type. 
+// ExchangeItems() is an atomic combination of item generation and consumption.
+// It can be used to implement crafting recipes or transmutations, or items which unpack
+// themselves into other items (e.g., a chest).
+// Exchange recipes are defined in the ItemDef, and explicitly list the required item
+// types and resulting generated type.
 // Exchange recipes are evaluated atomically by the Inventory Service; if the supplied
-// components do not match the recipe, or do not contain sufficient quantity, the 
+// components do not match the recipe, or do not contain sufficient quantity, the
 // exchange will fail.
 bool ExchangeItems( SteamInventoryResult_t *pResultHandle,
                             STEAM_ARRAY_COUNT(unArrayGenerateLength) const SteamItemDef_t *pArrayGenerate, STEAM_ARRAY_COUNT(unArrayGenerateLength) const uint32 *punArrayGenerateQuantity, uint32 unArrayGenerateLength,
@@ -647,9 +647,9 @@ bool GetItemDefinitionIDs(
 // on the current Steam language settings (see ISteamApps::GetCurrentGameLanguage).
 // Property names are always composed of ASCII letters, numbers, and/or underscores.
 // Pass a NULL pointer for pchPropertyName to get a comma - separated list of available
-// property names. If pchValueBuffer is NULL, *punValueBufferSize will contain the 
+// property names. If pchValueBuffer is NULL, *punValueBufferSize will contain the
 // suggested buffer size. Otherwise it will be the number of bytes actually copied
-// to pchValueBuffer. If the results do not fit in the given buffer, partial 
+// to pchValueBuffer. If the results do not fit in the given buffer, partial
 // results may be copied.
 bool GetItemDefinitionProperty( SteamItemDef_t iDefinition, const char *pchPropertyName,
     STEAM_OUT_STRING_COUNT(punValueBufferSizeOut) char *pchValueBuffer, uint32 *punValueBufferSizeOut )
@@ -683,7 +683,7 @@ bool GetItemDefinitionProperty( SteamItemDef_t iDefinition, const char *pchPrope
                 {
                     // copy what we can
                     strncpy(pchValueBuffer, val.c_str(), *punValueBufferSizeOut);
-                    *punValueBufferSizeOut = std::min(static_cast<uint32>(val.length() + 1), *punValueBufferSizeOut);
+                    *punValueBufferSizeOut = (std::min)(static_cast<uint32>(val.length() + 1), *punValueBufferSizeOut);
                 }
                 else
                 {
@@ -726,7 +726,7 @@ bool GetItemDefinitionProperty( SteamItemDef_t iDefinition, const char *pchPrope
                     strncat(pchValueBuffer, i.key().c_str(), len);
                     // Count how many chars we copied
                     // Either the string length or the buffer size if its too small
-                    uint32 x = std::min(len, static_cast<uint32>(i.key().length()));
+                    uint32 x = (std::min)(len, static_cast<uint32>(i.key().length()));
                     *punValueBufferSizeOut += x;
                     len -= x;
 
@@ -772,8 +772,8 @@ bool GetEligiblePromoItemDefinitionIDs(
 
 // Starts the purchase process for the given item definitions.  The callback SteamInventoryStartPurchaseResult_t
 // will be posted if Steam was able to initialize the transaction.
-// 
-// Once the purchase has been authorized and completed by the user, the callback SteamInventoryResultReady_t 
+//
+// Once the purchase has been authorized and completed by the user, the callback SteamInventoryResultReady_t
 // will be posted.
 STEAM_CALL_RESULT( SteamInventoryStartPurchaseResult_t )
 SteamAPICall_t StartPurchase( STEAM_ARRAY_COUNT(unArrayLength) const SteamItemDef_t *pArrayItemDefs, STEAM_ARRAY_COUNT(unArrayLength) const uint32 *punArrayQuantity, uint32 unArrayLength )
