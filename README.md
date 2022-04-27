@@ -1,5 +1,7 @@
 # Goldberg Steam Emulator
 
+# **Please report any non-OpenIW related issues here: https://gitlab.com/Mr_Goldberg/goldberg_emulator**
+
 This is a steam emulator that emulates steam online features on a LAN. It works on both Linux and Windows. For a readme on how to use it see: [The Release Readme](Readme_release.txt)
 
 You replace the steam api .dll or .so with mine (for complete steps see the [Release Readme](Readme_release.txt)) and then you can put steam in the trash and play your games either in single player on on LAN without steam (Assuming the games have no DRM and use Steam for online).
